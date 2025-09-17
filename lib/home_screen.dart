@@ -1,16 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'controllers/app_controller.dart';
 
 class HomeScreen extends StatelessWidget {
-  final int counter;
-  final VoidCallback onIncrement;
-  final String username;
-
-  const HomeScreen({
-    super.key,
-    required this.counter,
-    required this.onIncrement,
-    required this.username,
-  });
+  final AppController controller = Get.find<AppController>();
 
   @override
   Widget build(BuildContext context) {
@@ -20,22 +13,27 @@ class HomeScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text("Hello, $username",
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+            Obx(() => Text(
+                  "Hello, ${controller.username.value}",
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                )),
             SizedBox(height: 20),
-            Text("Counter: $counter", style: TextStyle(fontSize: 24)),
+            Obx(() => Text(
+                  "Counter: ${controller.counter.value}",
+                  style: TextStyle(fontSize: 24),
+                )),
             SizedBox(height: 20),
             ElevatedButton(
-              onPressed: onIncrement,
+              onPressed: controller.incrementCounter,
               child: Text("Increment Counter"),
             ),
             SizedBox(height: 20),
             ElevatedButton(
-              onPressed: () => Navigator.pushNamed(context, '/profile'),
+              onPressed: () => Get.toNamed('/profile'),
               child: Text("Go to Profile"),
             ),
             ElevatedButton(
-              onPressed: () => Navigator.pushNamed(context, '/settings'),
+              onPressed: () => Get.toNamed('/settings'),
               child: Text("Go to Settings"),
             ),
           ],

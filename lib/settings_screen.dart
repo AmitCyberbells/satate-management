@@ -1,25 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'controllers/app_controller.dart';
 
 class SettingsScreen extends StatelessWidget {
-  final bool isDark;
-  final VoidCallback onToggleTheme;
-
-  const SettingsScreen({
-    super.key,
-    required this.isDark,
-    required this.onToggleTheme,
-  });
+  final AppController controller = Get.find<AppController>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text("Settings")),
       body: Center(
-        child: SwitchListTile(
-          title: Text("Dark Theme"),
-          value: isDark,
-          onChanged: (value) => onToggleTheme(),
-        ),
+        child: Obx(() => SwitchListTile(
+              title: Text("Dark Theme"),
+              value: controller.isDarkTheme.value,
+              onChanged: (val) => controller.toggleTheme(),
+            )),
       ),
     );
   }
